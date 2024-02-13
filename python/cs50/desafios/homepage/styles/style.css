@@ -1,0 +1,161 @@
+
+:root{
+    --color1:#cea21d;
+    --color2:rgba(245, 216, 50, 0.705);
+    --color3:#D91604;
+    --color4:#8C160B;
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+
+    box-sizing: border-box;
+}
+
+body{
+    background-color: var(--color2);
+}
+
+header{
+    text-align: center;
+    background-color: white;
+}
+
+nav{
+    padding: 10px;
+
+    background-color: var(--color3);
+}
+
+nav a{
+    margin: 10px;
+    
+    font:bold 1.3em 'Courier New', Courier, monospace;
+    
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.219);
+
+    color: var(--color1);
+}
+
+nav a:hover{
+    border-radius: 10px 0px;
+
+    text-decoration: none;
+    text-shadow: 0px 2px rgba(0, 0, 0, 0.425);
+
+    color: white;
+    
+}
+
+main{
+    margin: auto;
+    padding: 10px;
+    max-width: 800px;
+
+    background-color: white;
+}
+
+main h1{
+    text-align: center;
+}
+main p{
+    text-align: center;
+}
+
+main h2{
+    height: 40px;
+    margin: 10px 0px 0px;
+    padding: 10px;
+
+    border-radius: 20px 20px 0px 0px;
+
+    text-align: center;
+    text-shadow: 1px 1px black;
+
+    font:bold 1.3em arial, verdana, sans-serif;
+
+    color: white;
+    background-color: var(--color4);
+}
+
+main img{
+    min-width: 40%;
+    max-width: 100%;
+}
+
+div.backgroundimage{
+    height: 400px;
+    margin-bottom: 30px;
+
+    border-radius: 0px 0px 10px 10px;
+
+    background: center no-repeat fixed;
+    background-size:cover;
+}
+
+main div h3{
+    max-width: 300px;
+    padding: 10px;
+
+    text-shadow: 1px 1px black;
+
+    background-color: rgba(0, 0, 0, 0.233);
+}
+
+div#image1{
+    background-image: url(https://www.fatosdesconhecidos.com.br/wp-content/uploads/2019/11/meme-600x367.jpg) ;
+}
+
+div#image2{
+    background-position: right;
+
+    background-image: url(https://i.kym-cdn.com/entries/icons/facebook/000/027/195/cover10.jpg);
+}
+
+main div#image2 h3{
+    color: white;
+}
+
+div#youtubevideo{
+    padding: 10px 10px 5px;
+    background-color: var(--color4);
+}
+
+footer{
+    margin: 0px auto 0px;
+    padding: 0px;
+
+    text-align: center;
+
+    color: white;
+    background-color: var(--color4);
+}
+
+footer p{
+    margin: 0px auto;
+}
+
+footer strong{
+    color: var(--color1);
+}
+
+footer a{
+    color: var(--color2);
+}
+
+footer a:hover{
+
+    text-decoration: none;
+    color: white;
+}
+
+table{
+    border-collapse: collapse;
+}
+
+table tr td{
+    padding: 1px;
+    border: 1px solid black;
+
+}

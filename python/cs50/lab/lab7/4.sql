@@ -1,0 +1,1 @@
+SELECT name FROM songs WHERE danceability > '0.74' AND energy > '0.74' AND valence > '0.74';

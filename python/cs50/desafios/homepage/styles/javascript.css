@@ -1,0 +1,25 @@
+
+
+div{
+    display: inline-block;
+
+    width: 100px;
+    height: 100px;
+
+    color: white;
+    text-shadow: 1px 1px black;
+
+    background-color: white;
+}
+
+#blue{
+    background-color: red;   
+}
+
+#red{
+    background-color: blue;
+}
+
+#purple{
+    background-color: green;
+}
