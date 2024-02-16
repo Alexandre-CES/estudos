@@ -2,11 +2,15 @@ const express = require('express')
 const app = express()
 const port = 12345
 
-app.get('/:sus', (req, res) =>{
-    res.send('sas?'+req.params.rolas)
+app.get('/', (req, res) =>{
+    
+    res.sendFile(__dirname + '/html/index.html')
 })
 
-
+app.get('/teste', (req,res) =>{
+    
+    res.sendFile(__dirname + '/html/teste.html')
+})
 
 
 
