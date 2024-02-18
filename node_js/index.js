@@ -2,22 +2,47 @@ const express = require('express')
 const app = express()
 const port = 12345
 
-app.get('/', (req, res) =>{
-    
-    res.sendFile(__dirname + '/html/index.html')
-})
+const Post = require('./models/Post')
 
-app.get('/teste', (req,res) =>{
-    
-    res.sendFile(__dirname + '/html/teste.html')
-})
+//Config
+    //Express
+    app.use(express.urlencoded({ extended: true }))
+    app.use(express.json())
 
+    // Template Engine
+        const hbs = require('express-handlebars')
+        app.engine('.hbs', hbs.engine({
+            defaultLayout:'main',
+            extname: '.hbs'
+        }))
+        app.set('view engine', '.hbs')
 
+//Rotas
 
+    app.get('/', (req, res) => {
+        res.render('index')
+    })
 
+    app.all('/formulario', (req, res) => {
+        if (req.method === 'GET') {
+            res.render('formulario')
+        } else if (req.method === 'POST') {
+            const titulo = req.body.titulo
+            const conteudo = req.body.conteudo
+            Post.create({
+                titulo: titulo,
+                conteudo: conteudo
+            }).then(() =>{
+                console.log('success')
+            }).catch(() =>{
+                console.log('error')
+            })
+            
+            console.log(titulo + ' ' + conteudo)
+        }
+    })
 
-
-//Sempre última linha
+// Iniciar o servidor Express
 app.listen(port, () => {
-    console.log(`Server is running at http://Localhost:${port}`)
+    console.log(`Server is running at http://localhost:${port}`)
 })
