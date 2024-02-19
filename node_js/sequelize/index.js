@@ -13,14 +13,20 @@ const Post = require('./models/Post')
         const hbs = require('express-handlebars')
         app.engine('.hbs', hbs.engine({
             defaultLayout:'main',
-            extname: '.hbs'
+            extname: '.hbs',
+            runtimeOptions: {
+                allowProtoPropertiesByDefault: true,
+                allowProtoMethodsByDefault: true,
+            }
         }))
         app.set('view engine', '.hbs')
 
 //Rotas
 
     app.get('/', (req, res) => {
-        res.render('index')
+        Post.findAll({order: [['id', 'DESC']]}).then((posts) =>{
+            res.render('index', {posts: posts})
+        })
     })
 
     app.all('/formulario', (req, res) => {
@@ -33,13 +39,28 @@ const Post = require('./models/Post')
                 titulo: titulo,
                 conteudo: conteudo
             }).then(() =>{
-                console.log('success')
+                res.redirect('/')
             }).catch(() =>{
                 console.log('error')
             })
             
             console.log(titulo + ' ' + conteudo)
         }
+    })
+
+    app.get('/deletar/:id', (req, res) =>{
+        post_id = Post.findAll({where: {'id': req.params.id}}).then((post) =>{
+            if (post.length > 0){
+                Post.destroy({where: {'id': req.params.id}}).then(()=>{
+                    res.send('postagem deletada com sucesso')
+                }).catch(() =>{
+                    res.send('Falha ao deletar a postagem')
+                })
+            }else{
+                res.send('postagem não existe!')
+            }
+        })
+        
     })
 
 // Iniciar o servidor Express
