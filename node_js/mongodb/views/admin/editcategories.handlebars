@@ -6,12 +6,13 @@
 <h3>Edit Category</h3>
 <div class="card">
     <div class="card-body">
-        <form action="/admin/categories/new" method="post">
+        <form action="/admin/categories/edit/{{_id}}" method="post">
+            <input type="hidden" name="id" value="{{_id}}">
             <label for="name">Name: </label>
-            <input type="text" placeholder="Category's name" name="name" id="name" class="form-control" value="{{name}}">
+                <input type="text" placeholder="Category's name" name="name" id="name" class="form-control" value="{{name}}">
             <label for="slug">Slug: </label>
-            <input type="text" placeholder="Category's slug" name="slug" id="slug" class="form-control" value="{{slug}}">
-            <br>
+                <input type="text" placeholder="Category's slug" name="slug" id="slug" class="form-control" value="{{slug}}">
+                <br>
             <button type="submit" class="btn btn-success">Edit category</button>
         </form>
     </div>
