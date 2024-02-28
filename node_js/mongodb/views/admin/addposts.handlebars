@@ -7,7 +7,7 @@
     <div class="card-body">
         <form action="/admin/posts/new" method="post">
             <label for="tittle">Tttle:</label>
-            <input type="text" name="tittle" id="tittle" class="form-control" required>
+            <input type="text" name="title" id="title" class="form-control" required>
             <label for="slug">Slug:</label>
             <input type="text" name="slug" id="slug" class="form-control" required>
             <label for="description">Description:</label>
@@ -17,7 +17,7 @@
             <label for="category">Category: </label>
             <select name="category" id="category" class="form-select">
                 {{#each categories}}
-                    <option value="{{name}}">{{name}}</option>
+                    <option value="{{_id}}">{{name}}</option>
                 {{else}}
                     <option value="0">No registered category</option>
                 {{/each}}

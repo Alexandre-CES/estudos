@@ -7,6 +7,11 @@
     const mongoose = require('mongoose')
     const session = require('express-session')
     const flash = require('connect-flash')
+    require('./models/Post')
+    const Post = mongoose.model('posts')
+    require('./models/Category')
+    const Category = mongoose.model('categories')
+    const users = require('./routes/user')
 
 //Configuration
     //Sessão
@@ -44,7 +49,70 @@
     })
 
 //Routes
+    app.get('/', (req,res) =>{
+        Post.find().lean().populate({path:'category', strictPopulate: false}).sort({date: 'desc'}).then((posts)=>{
+            res.render('index', {posts:posts})
+        }).catch((err)=>{
+            req.flash('error_msg', 'Internal error: '+err)
+            res.redirect('/404')
+        })
+    })
+
+    app.get('/post/:slug', (req,res)=>{
+        Post.findOne({slug:req.params.slug}).lean().then((post)=>{
+            if(post){
+                res.render('post/index', {post:post})
+            }else{
+                req.flash('error_msg', `This post doesn't exist`)
+                res.redirect('/')
+            }
+        }).catch((err)=>{
+            req.flash('error_msg', `Internal error: ${err}`)
+            res.redirect('/')
+        })
+    })
+
+    app.get('/posts', (req,res) =>{
+        res.render('posts')
+    })
+
+    app.get('/categories', (req,res)=>{
+        Category.find().lean().then((categories)=>{
+            res.render('categories/index', {categories:categories})
+
+        }).catch((err)=>{
+            req.flash('error_msg', 'Internal error: '+err)
+            res.redirect('/')
+        })
+    })
+
+    app.get('/categories/:slug', (req,res)=>{
+        Category.findOne({slug:req.params.slug}).lean().then((category)=>{
+            if(category){
+                
+                Post.find({category:category._id}).lean().then((posts)=>{
+                    
+                    res.render('categories/posts', {posts:posts, category:category})
+                }).catch((err)=>{
+                    req.flash('error_msg', 'Internal error: '+err)
+                    res.redirect('/categories')
+                })
+            }else{
+                req.flash('error_msg', 'This category does not exist!')
+                res.redirect('/categories')
+            }
+        }).catch((err)=>{
+            req.flash('error_msg', 'Internal error: '+err)
+            res.redirect('/')
+        })
+    })
+
+    app.get('/404', (req,res)=>{
+        res.send('error 404')
+    })
+
     app.use('/admin', admin)
+    app.use('/users', users)
 
 //Others
 const PORT = 8021

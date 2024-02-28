@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 require('../models/Category')
 const Category = mongoose.model('categories')
 require('../models/Post')
+const Post = mongoose.model('posts')
 
 router.get('/', (req,res) => {
     res.render('admin/index')
@@ -84,7 +85,13 @@ router.post('/categories/delete', (req, res) => {
 })
 
 router.get('/posts', (req, res) => {
-    res.render('admin/posts')
+    Post.find().lean().populate({path: 'category', strictPopulate: false}).sort({date: 'desc'}).then((posts)=>{
+        res.render('admin/posts', {posts: posts})
+    }).catch((err)=>{
+        console.log(err)
+        req.flash('error_msg', 'Ops..:'+err)
+        res.redirect('admin/posts')
+    })
 })
 
 router.get('/posts/add', (req,res)=> {
@@ -106,8 +113,75 @@ router.post('/posts/new', (req, res) => {
     if(errors.length > 0){
         res.render('admin/addposts', {errors: errors})
     }else{
+        const newPost = {
+            title: req.body.title,
+            description: req.body.description,
+            content: req.body.content,
+            slug: req.body.slug,
+            category: req.body.category
+        }
 
+        new Post(newPost).save().then(()=>{
+            req.flash('success_msg', 'Post created successfully')
+            res.redirect('/admin/posts')
+        }).catch((err)=>{
+            req.flash('error_msg', `error saving post: ${err}`)
+            res.redirect('/admin/posts')
+        })
     }
+})
+
+router.get('/posts/edit/:id', (req,res) =>{
+    Post.findOne({_id: req.params.id}).lean().then((post) =>{
+
+        Category.find().lean().then((categories) =>{
+            res.render('admin/editposts',
+            {
+                categories:categories, 
+
+                _id:post._id,
+                title:post.title, 
+                slug:post.slug, 
+                description:post.description, 
+                content:post.content, 
+                category:post.category
+            })
+        }).catch((err)=>{
+            req.flash('error_msg', 'error: '+err)
+            res.redirect(`/admin/posts`)
+        })
+    }).catch((err)=>{
+        req.flash('error_msg', 'error: '+err)
+        res.redirect(`/admin/posts`)
+    })
+})
+
+router.post('/posts/edit', (req, res)=>{
+
+    Post.findOneAndUpdate({_id: req.body.id},
+        {
+            title:req.body.title,
+            slug:req.body.slug,
+            description:req.body.description,
+            content:req.body.content,
+            category:req.body.category
+        }).then(() =>{
+            req.flash('success_msg', 'Success')
+            res.redirect('/admin/posts')
+    }).catch((err)=>{
+        req.flash('error_msg', 'Error: ' +err)
+        res.redirect('/admin/posts')
+    })
+})
+
+router.get('/posts/delete/:id', (req,res)=>{
+    Post.deleteOne({_id:req.params.id}).lean().then(()=>{
+        req.flash('success_msg', 'Success deleting post!')
+        res.redirect('/admin/posts')
+    }).catch((err)=>{
+        req.flash('error_msg', 'Internal error: '+err)
+        res.redirect('/admin/posts')
+    })
 })
 
 module.exports = router
