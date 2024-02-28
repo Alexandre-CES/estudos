@@ -3,6 +3,8 @@ const router = express.Router()
 const mongoose = require('mongoose')
 require('../models/User')
 const User = mongoose.model('users')
+const bcrypt = require('bcryptjs')
+const passport = require('passport')
 
 router.get('/register', (req,res)=>{
     res.render('users/register')
@@ -19,7 +21,7 @@ router.post('/register', (req,res)=>{
         errors.push({text:'Invalid Email'})
     }
 
-    if(!req.body.password || typeof req.body.password == undefined || req.body.pasword == null){
+    if(!req.body.password || typeof req.body.password == undefined || req.body.password == null){
         errors.push({text:'Invalid Password'})
     }
 
@@ -43,13 +45,43 @@ router.post('/register', (req,res)=>{
                 res.redirect('/users/register')
             }else{
 
+                var salt = bcrypt.genSaltSync(10)
+                var hash = bcrypt.hashSync(req.body.password, salt)
+               
+               const UserData = {
+                   name : req.body.name,
+                   email : req.body.email,
+                   password : hash
+                }
+               
+               
+                new User(UserData).save().then(() => {
+                    req.flash('success_msg', 'User registered successfully!')
+                    res.redirect('/')
+                }).catch((err) => {
+                    req.flash('error_msg', 'Error registering user: '+err)
+                    res.redirect("/usuarios/registro")
+                })
+
             }
         }).catch((err)=>{
             req.flash('error_msg', 'Internal error: '+err)
             res.redirect('/users/register')
         })
-
     }
+})
+
+router.get('/login', (req, res)=>{
+    res.render('users/login')
+})
+
+router.post('/login', (req,res,next)=>{
+
+    passport.authenticate('local', {
+        successRedirect:'/',
+        failureRedirect:'/users/login',
+        failureFlash: true
+    })(req,res,next)
 })
 
 module.exports = router

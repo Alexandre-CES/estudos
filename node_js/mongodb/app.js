@@ -12,6 +12,8 @@
     require('./models/Category')
     const Category = mongoose.model('categories')
     const users = require('./routes/user')
+    const passport = require('passport')
+    require('./config/auth')(passport)
 
 //Configuration
     //Sessão
@@ -20,11 +22,17 @@
             resave: true,
             saveUninitialized: true
         }))
+
+        app.use(passport.initialize())
+        app.use(passport.session())
+
         app.use(flash())
     //Middleware
         app.use((req,res,next)=>{
             res.locals.success_msg = req.flash('success_msg')
             res.locals.error_msg = req.flash('error_msg')
+            res.locals.error = req.flash('error')
+            res.locals.user = req.user || null
             next()
         })
     //Body Parser
@@ -35,7 +43,7 @@
         app.set('view engine', 'handlebars')
     //Mongoose
         mongoose.Promise = global.Promise
-        mongoose.connect('mongodb://127.0.0.1:27017/blogapp').then(() =>{
+        mongoose.connect('mongodb://127.0.0.1:27017/teste-blogapp').then(() =>{
             console.log('Mongo connected')
         }).catch((err) =>{
             console.log(`Error: ${err}`)
