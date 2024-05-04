@@ -1,0 +1,85 @@
+*, html{
+    margin: 0px;
+    padding: 0px;
+}
+
+:root{
+    --color1: yellow;
+    --color2:   purple;
+    --color3:   blue;
+
+    --bg-main:white;
+    --bg-menu: black;
+}
+
+.center-box-transform{
+
+    top:50%;
+    left: 50%;
+
+    transform: translate(-50%,-50%);
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+
+    background-color: var(--bg-main);
+}
+
+header{
+    position: fixed;
+
+    top: 0;
+
+    width: 100%;
+
+    padding: 10px;
+
+    color:var(--color1);
+
+    background-color: var(--bg-menu);
+}
+
+header div{
+    display: inline-block;
+}
+
+
+
+div#showCliques-box{
+
+    width: 50px;
+    height: 50px;
+
+    padding: 10px;
+
+    border-radius: 50%;
+
+    text-align: center;
+
+    background-color: var(--color2);
+}
+
+span#showCliques{
+    position: relative;
+
+    top: 18%;
+
+    font-size: 2em;
+}
+
+main{
+    position: absolute;
+
+
+}
+
+button#main-button{
+    width: 80px;
+    height: 80px;
+
+    border-radius: 50%;
+
+    transition: .1s;
+}
