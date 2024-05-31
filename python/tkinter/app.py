@@ -1,6 +1,7 @@
 #tutorial do https://www.youtube.com/@RfZorzi-RafaelSerafim
 
 import tkinter as tk 
+from tkinter import ttk
 
 root = tk.Tk()
 
@@ -10,6 +11,7 @@ class Application():
         self.screen()
         self.frames()
         self.widgets_frame1()
+        self.list_frame2()
         root.mainloop()
     
     #screen configs
@@ -80,6 +82,27 @@ class Application():
 
         self.name_entry = tk.Entry(self.frame_1, bg='#E9E0F0')
         self.name_entry.place(relx=0.5, rely=0.65, relwidth=0.45)
+
+    def list_frame2(self):
+        self.listCli = ttk.Treeview(self.frame_2, height=3, columns=('col1', 'col2', 'col3', 'col4'))
+        self.listCli.heading('#0', text='')
+        self.listCli.heading('#1', text='Code')
+        self.listCli.heading('#2', text='Name')
+        self.listCli.heading('#3', text='Phone')
+        self.listCli.heading('#4', text='City')
+
+        self.listCli.column('#0', width=1)
+        self.listCli.column('#1', width=50)
+        self.listCli.column('#2', width=200)
+        self.listCli.column('#3', width=125)
+        self.listCli.column('#3', width=125)
+
+        self.listCli.place(relx=0.01, rely=0.01, relwidth=0.96, relheight=0.98)
+
+        self.scrollList = tk.Scrollbar(self.frame_2, orient='vertical')
+        self.listCli.configure(yscroll=self.scrollList.set)
+        self.scrollList.place(relx=0.97, rely=0.01, relwidth=0.02, relheight=0.98)
+
 
 if __name__ == '__main__':
     Application()
