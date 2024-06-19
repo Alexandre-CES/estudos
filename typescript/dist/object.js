@@ -54,3 +54,23 @@ console.log(onboarding05({
     funcao: 'Roberto',
     linguagem: 'Robson'
 }));
+const filho = {
+    nome: 'Alexandre',
+    sobrenome: 'Cabral',
+    idade: 18
+};
+console.log(filho);
+const usuario = {
+    nome: 'alexandre',
+    email: 'email@gmail.com'
+};
+const admin = {
+    nome: 'alexandre',
+    email: 'email@gmail.com',
+    admin: true
+};
+function acessarSistema(usuario) {
+    return usuario;
+}
+console.log(acessarSistema(usuario));
+console.log(acessarSistema(admin));

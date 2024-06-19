@@ -92,4 +92,59 @@ console.log(onboarding05({
     name: 'Rodolfo', 
     funcao:'Roberto', 
     linguagem:'Robson'
-}));
+}));       
+
+//Extensões (heranças)
+interface Mae{
+    nome: string;
+}
+interface Pai{
+    sobrenome:string;
+}
+interface Filho extends Mae, Pai{
+    idade: number;
+}
+const filho: Filho = {
+    nome: 'Alexandre',
+    sobrenome:'Cabral',
+    idade: 18
+}
+console.log(filho)
+
+//Tipos de interseções
+interface Cachorro {
+    tipo: string;
+}
+interface Gato{
+    tipo: string;
+}
+type Animal = Cachorro & Gato;
+
+//Gereric objects
+type Usuario = {
+    nome:string;
+    email:string;
+}
+type Admin = {
+    nome: string;
+    email: string;
+    admin: true;
+}
+const usuario: Usuario = {
+    nome: 'alexandre',
+    email: 'email@gmail.com'
+}
+const admin: Admin = {
+    nome: 'alexandre',
+    email: 'email@gmail.com',
+    admin: true
+}
+function acessarSistema<T>(usuario: T): T{
+    return usuario;
+}
+console.log(acessarSistema<Usuario>(usuario))
+console.log(acessarSistema<Admin>(admin))
+/*function acessarSistema(usuario: Usuario): Usuario{
+    return usuario;
+}
+console.log(acessarSistema(usuario))*/
