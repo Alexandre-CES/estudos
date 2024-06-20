@@ -74,3 +74,4 @@ function acessarSistema(usuario) {
 }
 console.log(acessarSistema(usuario));
 console.log(acessarSistema(admin));
+module.exports = {};

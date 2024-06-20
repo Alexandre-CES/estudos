@@ -10,10 +10,3 @@ function somarNumeros(a, b) {
     return a + b;
 }
 console.log(somarNumeros(2, 2));
-let taskCompleted = true;
-if (taskCompleted) {
-    console.log('Completed');
-}
-else {
-    console.log('Not completed');
-}

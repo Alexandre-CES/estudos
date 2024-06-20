@@ -29,7 +29,7 @@ const enum Comida{
     Torta,
     Carne
 }
-function comida(c: Comida){
+function comida(c: Comida): Comida{
     return c;
 }
 

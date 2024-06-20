@@ -1,4 +1,5 @@
 //object
+export = {};
 
 const objPessoa = {
     name:'name',

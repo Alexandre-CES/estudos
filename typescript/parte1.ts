@@ -23,18 +23,3 @@ function somarNumeros(a: number, b: number): number{
 }
 
 console.log(somarNumeros(2,2));
-
-//  BOOLEAN
-
-/* Boolean != boolean
-
-Boolean == object
-bolean == primitive */
-
-let taskCompleted: boolean = true;
-
-if (taskCompleted){
-    console.log('Completed');
-}else{
-    console.log('Not completed');
-}
