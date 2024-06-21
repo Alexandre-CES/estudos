@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class Funcionario {
     constructor(dataNascimento) {
         this.dataNascimento = dataNascimento;
@@ -30,4 +31,3 @@ const iFuncionario1 = {
 };
 iFuncionario1.codigo = 1234;
 iFuncionario1.nome = 'Alexandre';
-module.exports = {};

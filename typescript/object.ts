@@ -1,5 +1,5 @@
 //object
-export = {};
+export {};
 
 const objPessoa = {
     name:'name',

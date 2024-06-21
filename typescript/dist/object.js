@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const objPessoa = {
     name: 'name',
     age: 54
@@ -74,4 +75,3 @@ function acessarSistema(usuario) {
 }
 console.log(acessarSistema(usuario));
 console.log(acessarSistema(admin));
-module.exports = {};

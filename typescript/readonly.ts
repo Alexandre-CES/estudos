@@ -1,6 +1,6 @@
 //readonly
 
-export = {};
+export {};
 
 class Funcionario{
     readonly dataNascimento: Date;
