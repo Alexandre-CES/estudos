@@ -1,8 +1,7 @@
 //get & set
-
-//get
 export {};
 
+//get
 class Quadrado{
     private _altura:number = 6;
     private _largura:number = 12;
