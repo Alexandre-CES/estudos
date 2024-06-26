@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class Pessoa {
     constructor(nome, sobrenome) {
         this.nome = nome;

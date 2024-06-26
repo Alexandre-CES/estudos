@@ -1,4 +1,5 @@
 //classes
+export{};
 
 class Pessoa {
     //fields
