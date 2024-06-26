@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const validator_1 = require("./validator");
+let email = 'test@example.com';
+let validator = new validator_1.EmailValidator();
+let result = validator.isValid(email);
+console.log(`O email ${email} é válido?: ${result}`);
+let zipCode = '12345';
+let validator2 = new validator_1.ZipCodeValidator();
+let result2 = validator2.isValid(zipCode);
+console.log(`O zipCode ${zipCode} é válido?: ${result2}`);
