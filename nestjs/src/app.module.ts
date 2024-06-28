@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
-import { AppController, CatsController } from './app.controller';
+import { AppController } from './app.controller';
+import { CatsController } from './cats/cats.controller';
 import { AppService } from './app.service';
 
 //annotation
