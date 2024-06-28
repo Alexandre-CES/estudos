@@ -23,8 +23,6 @@ export class CatsController{
     return 'this routes uses a wildcard';
   }
 
-  
-
   @Post('create')
   @HttpCode(202)
   @Header('Cache-Control','none')
@@ -38,5 +36,4 @@ export class CatsController{
       breed:${createCatDto.breed}
     `;
   }
-  
 }
