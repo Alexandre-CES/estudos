@@ -1,12 +1,16 @@
 import { Controller, Get, Post, HttpCode, Header, Redirect, Param, Body } from '@nestjs/common';
 import { CreateCatDto } from './create-cat.dto';
+import { CatsService } from './cats.service';
+import { Cat } from './interfaces/cat.interface';
 
 @Controller('cats')
 export class CatsController{
+  constructor(private catsService: CatsService){}
 
   @Get()
-  @Redirect('https://nestjs.com', 301)
-  home(){}
+  async findAll(): Promise<Cat[]> {
+    return this.catsService.findAll();
+  }
 
   @Get('/id/:id')
   findOne(@Param() params: any): string {
@@ -14,9 +18,8 @@ export class CatsController{
   }
 
   @Get('breed')
-  async findAll(): Promise<any[]> {
-    return ['This promisse returns all the cats'];
-  }
+  @Redirect('https://nestjs.com', 301)
+  home(){}
 
   @Get('ab*cd')
   wildGet(){
@@ -27,13 +30,6 @@ export class CatsController{
   @HttpCode(202)
   @Header('Cache-Control','none')
   async create(@Body() createCatDto: CreateCatDto){
-    createCatDto.name = 'name';
-    createCatDto.age = 1;
-    createCatDto.breed = 'cat';
-    return `this action creates a cat:
-      name:${createCatDto.name}
-      age:${createCatDto.age}
-      breed:${createCatDto.breed}
-    `;
+    this.catsService.create(createCatDto);
   }
 }

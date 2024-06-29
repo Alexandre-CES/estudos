@@ -1,4 +1,4 @@
-//responsável pelas requests
+//responsável pelas requests e responses
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 
