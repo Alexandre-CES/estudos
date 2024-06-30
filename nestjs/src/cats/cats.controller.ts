@@ -1,5 +1,5 @@
 import { Controller, Get, Post, HttpCode, Header, Redirect, Param, Body } from '@nestjs/common';
-import { CreateCatDto } from './create-cat.dto';
+import { CreateCatDto } from './dto/create-cat.dto';
 import { CatsService } from './cats.service';
 import { Cat } from './interfaces/cat.interface';
 

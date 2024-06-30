@@ -1,5 +1,6 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Optional, Inject } from "@nestjs/common";
 import { Cat } from './interfaces/cat.interface';
+import { privateDecrypt } from "crypto";
 
 @Injectable()
 export class CatsService {
@@ -12,4 +13,17 @@ export class CatsService {
     findAll(): Cat[]{
         return this.cats;
     }
+}
+
+//optional provider
+@Injectable()
+export class HttpService<T>{
+    constructor(@Optional() @Inject('HTTP_OPTIONS') private httpClient: T){}
+}
+
+//property-based injection
+@Injectable()
+export class HttpService2<T> {
+  @Inject('HTTP_OPTIONS')
+  private readonly httpClient: T;
 }
