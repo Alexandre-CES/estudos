@@ -2,7 +2,7 @@ import { Module, NestModule, RequestMethod, MiddlewareConsumer } from '@nestjs/c
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CatsModule } from './cats/cats.module';
-import { LoggerMiddleware } from './logger.middleware';
+import { logger} from './logger.middleware';
 
 //annotation
 @Module({
@@ -13,7 +13,10 @@ import { LoggerMiddleware } from './logger.middleware';
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(LoggerMiddleware)
-      .forRoutes({path:'cats/*', method: RequestMethod.GET});
+      .apply(logger)
+      .exclude(
+        { path: 'cats/(.*)', method: RequestMethod.GET }
+      )
+      .forRoutes({path:'cats/*', method: RequestMethod.ALL});
   }
 }
