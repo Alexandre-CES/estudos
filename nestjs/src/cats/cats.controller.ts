@@ -1,7 +1,8 @@
 import { Controller, Get, Post,
           Header, Redirect, Param, Body,
           HttpCode, HttpException, HttpStatus,
-          UseFilters
+          UseFilters, 
+          ParseIntPipe
         } from '@nestjs/common';
 
 import { CreateCatDto } from './dto/create-cat.dto';
@@ -21,8 +22,9 @@ export class CatsController{
   }
 
   @Get('/id/:id')
-  findOne(@Param() params: any): string {
-    return `This action returns a #${params.id} cat`;
+  findOne(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }))
+  id: number){
+    return this.catsService.findOne(id);
   }
 
   @Get('breed')

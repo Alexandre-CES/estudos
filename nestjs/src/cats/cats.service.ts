@@ -13,6 +13,10 @@ export class CatsService {
     findAll(): Cat[]{
         return this.cats;
     }
+
+    findOne(id): Cat{
+        return this.cats[id];
+    }
 }
 
 //optional provider
