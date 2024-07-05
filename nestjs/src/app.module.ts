@@ -7,7 +7,9 @@ import { CatsModule } from './cats/cats.module';
 import { logger} from './logger.middleware';
 
 import { HttpExceptionFilter } from './cats/exceptions/http-exception.filter';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_PIPE } from '@nestjs/core';
+
+import { ValidationPipe } from './cats/pipes/validation.pipe';
 
 //annotation
 @Module({
@@ -17,6 +19,10 @@ import { APP_FILTER } from '@nestjs/core';
     {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter
+    },
+    {
+      provide: APP_PIPE,
+      useClass: ValidationPipe
     }
   ],
 })
