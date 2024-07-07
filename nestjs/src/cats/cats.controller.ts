@@ -1,7 +1,8 @@
 import { Controller, Get, Post,
           Header, Redirect, Param, Body,
           HttpCode, HttpException, HttpStatus,
-          UseFilters
+          UseFilters,
+          DefaultValuePipe
         } from '@nestjs/common';
 
 import { CreateCatDto } from './dto/create-cat.dto';
@@ -23,7 +24,7 @@ export class CatsController{
   }
 
   @Get('/id/:id')
-  findOne(@Param('id', new ParseIntPipe()) id){
+  findOne(@Param('id', new DefaultValuePipe(0), new ParseIntPipe()) id){
     return this.catsService.findOne(id);
   }
 
