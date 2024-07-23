@@ -1,0 +1,50 @@
+header{
+    margin: auto;
+
+    text-align: center;
+}
+
+main{
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%,-50%);
+
+    font-size: 2em;
+}
+
+div#result{
+    display: flex;
+
+    align-items: center;
+    justify-self: right;
+
+    height: 50px;
+    text-align: right;
+
+    border: 1px solid black;
+}
+
+div#button-box{
+    display: flex;
+
+    flex-flow: wrap;
+
+    max-width: 400px;
+}
+
+div#button-box > button:first-child{
+    flex-basis: 50%;
+}
+
+div#button-box > button:nth-child(2){
+    flex-basis: 50%;
+}
+
+div#button-box button{
+    flex-basis: 25%;
+
+    padding: 8px;
+}

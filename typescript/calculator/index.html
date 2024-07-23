@@ -3,14 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Calculator</title>
 </head>
 <body>
+    <header>
+        <h1>Calculadora</h1>
+        <small>No momento só consigo fazer com dois númenos por vez, sem cálculos complexos</small>
+    </header>
     <main>
         <div id="result">
 
         </div>
-        <div>
+        <div id="button-box">
+            <button onclick="clearAll()">clear</button>
+            <button onclick="clearOne()">x</button>
+
             <button onclick="insert('1')">1</button>
             <button onclick="insert('2')">2</button>
             <button onclick="insert('3')">3</button>
