@@ -15,6 +15,10 @@ main{
     font-size: 2em;
 }
 
+div#storedNumber{
+    font-size: 0.5em;
+}
+
 div#result{
     display: flex;
 

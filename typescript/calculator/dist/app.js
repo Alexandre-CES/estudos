@@ -1,6 +1,8 @@
 "use strict";
 const result = document.getElementById('result');
+const storedNumberBox = document.getElementById('storedNumber');
 let storedNumber = '0';
+let operator = '';
 //clear everything
 function clearAll() {
     if (result) {
@@ -20,25 +22,54 @@ function insert(num) {
     }
 }
 //to store a number so you can put another
-function storeNumber(num) {
-    storedNumber = num;
-}
-function calculate(ope) {
+function storeNumber(ope) {
     if (result) {
-        if (result.innerHTML.trim() == '') {
-            result.innerHTML = storedNumber;
+        storedNumber = result.innerHTML.trim();
+        if (storedNumberBox) {
+            storedNumberBox.innerHTML = storedNumber + ope;
         }
+        clearAll();
+        operator = ope;
+    }
+}
+function calculate() {
+    if (result && storedNumber) {
+        let x = Number(storedNumber);
+        let y = Number(result.innerHTML);
+        let res;
+        if (operator == '/') {
+            res = divide(x, y);
+        }
+        else if (operator == '*') {
+            res = multiply(x, y);
+        }
+        else if (operator == '-') {
+            res = subtract(x, y);
+        }
+        else if (operator == '+') {
+            res = sum(x, y);
+        }
+        else {
+            return 'error';
+        }
+        result.innerHTML = res;
+        storedNumber = '';
+        operator = '';
     }
 }
 function divide(x, y) {
-    return x / y;
+    let res = x / y;
+    return res.toString();
 }
 function multiply(x, y) {
-    return x * y;
+    let res = x * y;
+    return res.toString();
 }
 function subtract(x, y) {
-    return x - y;
+    let res = x - y;
+    return res.toString();
 }
 function sum(x, y) {
-    return x - y;
+    let res = x + y;
+    return res.toString();
 }

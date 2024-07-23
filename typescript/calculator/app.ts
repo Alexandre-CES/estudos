@@ -1,7 +1,9 @@
 
 
 const result = document.getElementById('result');
+const storedNumberBox = document.getElementById('storedNumber');
 let storedNumber:string = '0';
+let operator:string = '';
 
 //clear everything
 function clearAll(){
@@ -25,30 +27,58 @@ function insert(num:string){
 }
 
 //to store a number so you can put another
-function storeNumber(num:string){
-    storedNumber = num;
-}
-
-function calculate(ope:string){
-    if(result){
-        if(result.innerHTML.trim() == ''){
-            result.innerHTML = storedNumber;
+function storeNumber(ope:string){
+    if (result){
+        storedNumber = result.innerHTML.trim();
+        if(storedNumberBox){
+            storedNumberBox.innerHTML = storedNumber + ope;
         }
+        clearAll();
+        operator = ope;
     }
 }
 
-function divide(x:number, y:number): number{
-    return x / y
+function calculate(){
+    if(result && storedNumber){
+        let x:number = Number(storedNumber);
+        let y:number = Number(result.innerHTML);
+        let res:string;
+
+        if(operator == '/'){
+            res = divide(x, y);
+        }else if(operator == '*'){
+            res = multiply(x,y);
+        }else if(operator == '-'){
+            res = subtract(x,y);
+        }else if(operator == '+'){
+            res = sum(x,y);
+        }else{
+            return 'error'
+        }
+
+        result.innerHTML = res;
+        storedNumber = '';
+        operator = '';
+    }
 }
 
-function multiply(x:number, y:number): number{
-    return x * y
+function divide(x:number, y:number): string{
+    let res = x / y;
+
+    return res.toString();
 }
 
-function subtract(x:number, y:number): number{
-    return x - y
+function multiply(x:number, y:number): string{
+    let res = x * y;
+    return res.toString();
 }
 
-function sum(x:number, y:number): number{
-    return x - y
+function subtract(x:number, y:number): string{
+    let res =  x - y;
+    return res.toString();
+}
+
+function sum(x:number, y:number): string{
+    let res =  x + y;
+    return res.toString();
 }

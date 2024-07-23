@@ -12,8 +12,13 @@
         <small>No momento só consigo fazer com dois númenos por vez, sem cálculos complexos</small>
     </header>
     <main>
-        <div id="result">
+        <div>
+            <div id="storedNumber">
+                
+            </div>
+            <div id="result">
 
+            </div>
         </div>
         <div id="button-box">
             <button onclick="clearAll()">clear</button>
@@ -22,19 +27,19 @@
             <button onclick="insert('1')">1</button>
             <button onclick="insert('2')">2</button>
             <button onclick="insert('3')">3</button>
-            <button>/</button>
+            <button onclick="storeNumber('/')">/</button>
             <button onclick="insert('4')">4</button>
             <button onclick="insert('5')">5</button>
             <button onclick="insert('6')">6</button>
-            <button>*</button>
+            <button onclick="storeNumber('*')">*</button>
             <button onclick="insert('7')">7</button>
             <button onclick="insert('8')">8</button>
             <button onclick="insert('9')">9</button>
-            <button>-</button>
+            <button onclick="storeNumber('-')">-</button>
             <button onclick="insert('0')">0</button>
             <button>.</button>
-            <button>=</button>
-            <button>+</button>
+            <button onclick="calculate()">=</button>
+            <button onclick="storeNumber('+')">+</button>
         </div>
     </main>
 </body>
