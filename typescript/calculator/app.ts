@@ -10,12 +10,24 @@ function clearAll(){
     if(result){
         result.innerHTML = '';
     }
+    if(storedNumberBox){
+        storedNumberBox.innerHTML = '';
+    }
+    storedNumber = '';
+    operator = '';
 }
 
 //clear last digit
 function clearOne() {
     if (result) {
         result.innerHTML = result.innerHTML.slice(0, -1);
+    }
+}
+
+//clear result box
+function clear(){
+    if(result){
+        result.innerHTML = '';
     }
 }
 
@@ -31,9 +43,9 @@ function storeNumber(ope:string){
     if (result){
         storedNumber = result.innerHTML.trim();
         if(storedNumberBox){
-            storedNumberBox.innerHTML = storedNumber + ope;
+            storedNumberBox.innerHTML = storedNumber + ' ' + ope;
         }
-        clearAll();
+        clear();
         operator = ope;
     }
 }
@@ -44,20 +56,28 @@ function calculate(){
         let y:number = Number(result.innerHTML);
         let res:string;
 
-        if(operator == '/'){
-            res = divide(x, y);
-        }else if(operator == '*'){
-            res = multiply(x,y);
-        }else if(operator == '-'){
-            res = subtract(x,y);
-        }else if(operator == '+'){
-            res = sum(x,y);
-        }else{
-            return 'error'
+        switch (operator){
+            case '/':
+                res = divide(x, y);
+                break;
+            case '*':
+                res = multiply(x,y);
+                break;
+            case '-':
+                res = subtract(x,y);
+                break;
+            case '+':
+                res = sum(x,y);
+                break;
+            default:
+                return 'error';
         }
 
         result.innerHTML = res;
-        storedNumber = '';
+        storedNumber = res;
+        if (storedNumberBox){
+            storedNumberBox.innerHTML = '';
+        }
         operator = '';
     }
 }
