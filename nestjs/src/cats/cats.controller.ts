@@ -1,8 +1,8 @@
 import { Controller, Get, Post,
           Header, Redirect, Param, Body,
           HttpCode, HttpException, HttpStatus,
-          UseFilters,
-          DefaultValuePipe
+          UseFilters,UseGuards,
+          DefaultValuePipe,
         } from '@nestjs/common';
 
 import { CreateCatDto } from './dto/create-cat.dto';
@@ -12,9 +12,14 @@ import { Cat } from './interfaces/cat.interface';
 import { HttpExceptionFilter } from './exceptions/http-exception.filter';
 import { ForbiddenException } from './exceptions/forbidden.exception';
 
+import { Roles } from './decorators/roles.decorator';
+
 import { ParseIntPipe } from './pipes/parse-int.pipe';
 
+import { RolesGuard } from './guards/roles.guard';
+
 @Controller('cats')
+@UseGuards(RolesGuard)
 export class CatsController{
   constructor(private catsService: CatsService){}
 
@@ -55,6 +60,7 @@ export class CatsController{
   @HttpCode(202)
   @Header('Cache-Control','none')
   @UseFilters(HttpExceptionFilter)
+  @Roles(['admin'])
   async create(@Body() createCatDto: CreateCatDto){
     throw new ForbiddenException();
   }
