@@ -1,10 +1,11 @@
+import {genNum, genList} from './helpers/random';
+
 
 function Main(){
 
     //create database
-    const ages = genRandomNumList(15,70,40); //input
+    const ages = genList(15,70,40); //input
 
-    if(Array.isArray(ages)){
         let label:number[] = [];
         for(let i = 0; i < ages.length; i++){
             if(ages[i] < 30){
@@ -15,41 +16,37 @@ function Main(){
         }
 
         for(let i = 0; i < 3; i++){
-            let r = genRandomNumList(0,label.length - 1);
-            if (typeof r === 'number') {
-                if (label[r] === 0) {
-                    label[r] = 1; //yes
-                } else {
-                    label[r] = 0; //no
-                }
-            }else{
-                console.log('r weren`t detected as number')
+
+            let r = genNum(0,label.length - 1);
+            if (label[r] === 0) {
+                label[r] = 1; //yes
+            } else {
+                label[r] = 0; //no
             }
+            
         }
 
     console.log(ages)
     console.log(label)
 
-    for (let i = 0; i < ages.length; i++) {
-        console.log(`Age: ${ages[i]}, Label: ${label[i]}`);
-    }
-    
-    }else{
-        console.log('ages weren`t detected as an array')
-    }
-}
+    // linear regression
+    const N = ages.length;
+    const sumX = ages.reduce((a, b) => a + b, 0);
+    const sumY = label.reduce((a, b) => a + b, 0);
+    const sumXY = ages.reduce((sum, age, i) => sum + age * label[i], 0);
+    const sumX2 = ages.reduce((sum, age) => sum + age * age, 0);
 
-function genRandomNumList(min: number, max: number, size?: number,): number[] | number {
-    if(size){
-        const randomNumbers: number[] = [];
-        for (let i = 0; i < size; i++) {
-            const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-            randomNumbers.push(randomNumber);
-        }
-        return randomNumbers;
-    }else{
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
+    const m = (N * sumXY - sumX * sumY) / (N * sumX2 - sumX * sumX);
+    const b = (sumY - m * sumX) / N;
+
+    console.log(`Slope (m): ${m}`);
+    console.log(`Intercept (b): ${b}`);
+
+    // Calculate threshold age
+    const thresholdAge = (0.5 - b) / m;
+    console.log(`Threshold Age: ${thresholdAge}`);
+
+
 }
 
 Main()

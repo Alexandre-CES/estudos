@@ -1,52 +1,41 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const random_1 = require("./helpers/random");
 function Main() {
     //create database
-    const ages = genRandomNumList(15, 70, 40); //input
-    if (Array.isArray(ages)) {
-        let label = [];
-        for (let i = 0; i < ages.length; i++) {
-            if (ages[i] < 30) {
-                label.push(0); //no
-            }
-            else {
-                label.push(1); //yes
-            }
+    const ages = (0, random_1.genList)(15, 70, 40); //input
+    let label = [];
+    for (let i = 0; i < ages.length; i++) {
+        if (ages[i] < 30) {
+            label.push(0); //no
         }
-        for (let i = 0; i < 3; i++) {
-            let r = genRandomNumList(0, label.length - 1);
-            if (typeof r === 'number') {
-                if (label[r] === 0) {
-                    label[r] = 1; //yes
-                }
-                else {
-                    label[r] = 0; //no
-                }
-            }
-            else {
-                console.log('r weren`t detected as number');
-            }
-        }
-        console.log(ages);
-        console.log(label);
-        for (let i = 0; i < ages.length; i++) {
-            console.log(`Age: ${ages[i]}, Label: ${label[i]}`);
+        else {
+            label.push(1); //yes
         }
     }
-    else {
-        console.log('ages weren`t detected as an array');
-    }
-}
-function genRandomNumList(min, max, size) {
-    if (size) {
-        const randomNumbers = [];
-        for (let i = 0; i < size; i++) {
-            const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-            randomNumbers.push(randomNumber);
+    for (let i = 0; i < 3; i++) {
+        let r = (0, random_1.genNum)(0, label.length - 1);
+        if (label[r] === 0) {
+            label[r] = 1; //yes
         }
-        return randomNumbers;
+        else {
+            label[r] = 0; //no
+        }
     }
-    else {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
+    console.log(ages);
+    console.log(label);
+    // linear regression
+    const N = ages.length;
+    const sumX = ages.reduce((a, b) => a + b, 0);
+    const sumY = label.reduce((a, b) => a + b, 0);
+    const sumXY = ages.reduce((sum, age, i) => sum + age * label[i], 0);
+    const sumX2 = ages.reduce((sum, age) => sum + age * age, 0);
+    const m = (N * sumXY - sumX * sumY) / (N * sumX2 - sumX * sumX);
+    const b = (sumY - m * sumX) / N;
+    console.log(`Slope (m): ${m}`);
+    console.log(`Intercept (b): ${b}`);
+    // Calculate threshold age
+    const thresholdAge = (0.5 - b) / m;
+    console.log(`Threshold Age: ${thresholdAge}`);
 }
 Main();
