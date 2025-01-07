@@ -1,0 +1,18 @@
+main{
+    width: 800px;
+    margin: 10px auto;
+}
+
+h1{
+    text-align: center;
+}
+
+section{
+    margin: 30px;
+
+    border-top: 1px solid black;
+}
+
+li{
+    margin: 10px;
+}
