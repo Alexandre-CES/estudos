@@ -9,10 +9,34 @@ h1{
 
 section{
     margin: 30px;
+    padding: 10px;
 
-    border-top: 1px solid black;
+    border-radius: 15px;
+    border: 1px solid black;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.404);
 }
 
 li{
     margin: 10px;
+}
+
+.form > div{
+    width: 500px;
+    margin: 10px 0px;
+    text-align: right;
+}
+
+.form label{
+    font-weight: bold;
+}
+
+.form input{
+    width: 80%;
+    height: 20px;
+
+    padding: 0px 10px;
+
+    border: hidden;
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.445);
 }
