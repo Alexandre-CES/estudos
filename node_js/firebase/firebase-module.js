@@ -15,7 +15,8 @@ import{
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
-    updateProfile
+    updateProfile,
+    onAuthStateChanged 
 } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -42,7 +43,7 @@ const db = getFirestore(app);
 //* => html elements
 
 //comment list / feedback
-const commentList = document.getElementById('comment-list');
+const divComments = document.getElementById('comments');
 
 //test buttons
 const buttonCurrentUser = document.getElementById('current-user');
@@ -67,26 +68,34 @@ const buttonLogout = document.getElementById('logout');
     updateComments():void
 */
 async function updateComments(){
-    const querySnapshot = await getFeeds();
 
-    querySnapshot.forEach((doc) => {
-        const listItem = document.createElement('li');
+    const user = auth.currentUser;
 
-        const user_id = doc.data()['id_user'];
-        const stars = doc.data()['stars'];
-        const comment = doc.data()['comment'];
+    if(user){
+        const feedbacks = await getFeeds();
 
-        listItem.innerHTML = `
-            <strong>ID do Documento:</strong> ${doc.id} <br>
-            <strong>ID do Usuário:</strong> ${user_id} <br>
-            <strong>Estrelas:</strong> ${stars} <br>
-            <strong>Comentário:</strong> ${comment}
-        `;
-        commentList.appendChild(listItem);
-    });
+        divComments.innerHTML = '';
+
+        const commentList = document.createElement('ul');
+
+        feedbacks.forEach((feedback) => {
+            const listItem = document.createElement('li');
+
+            const displayName = feedback.displayName;
+            const stars = feedback.stars;
+            const comment = feedback.comment;
+
+            listItem.innerHTML = `
+                <strong>User:</strong> ${displayName}<br>
+                <strong>Stars:</strong> ${stars} <br>
+                <strong>Comments:</strong> ${comment}
+            `;
+            commentList.appendChild(listItem);
+        });
+
+        divComments.appendChild(commentList);
+    }
 }
-
-updateComments();
 
 /*
     *return list of feedbacks
@@ -95,9 +104,14 @@ updateComments();
 async function getFeeds() {
     try {
         const querySnapshot = await getDocs(collection(db, 'feedback'));
-        return querySnapshot;
+        const feedbackList = [];
+        querySnapshot.forEach((doc) => {
+            feedbackList.push({ id: doc.id, ...doc.data() });
+        });
+        return feedbackList;
     } catch (err) {
-        return [{ comment:`Error searching for comments: ${err}` }];
+        console.error(`Error searching for comments: ${err}`);
+        return [];
     }
 }
 
@@ -108,8 +122,11 @@ async function getFeeds() {
 */
 async function newComment(user_id, stars, comment){
     try{
+        const displayName = auth.currentUser.displayName || auth.currentUser.email;
+
         const docRef  = await addDoc(collection(db, 'feedback'),{
             id_user:user_id,
+            displayName: displayName,
             stars:stars,
             comment:comment
         });
@@ -139,19 +156,28 @@ buttonCurrentUser.addEventListener('click', ()=>{
 // add new comment
 buttonNewComment.addEventListener('click', () => {
     try{
-        const userId = inputUserId.value;
+        const user = auth.currentUser;
+
+        if(!user){
+            console.error('Must be logged');
+            throw new Error('Must be logged');
+        }
+
+        const userId = user.uid;
         const stars = inputStars.value;
         const comment = inputComment.value;
 
-        if(!userId || !stars || !comment){
+        if(!stars || !comment){
             console.error('invalid fields');
             throw new Error('invalid fields');
         }else{
+            inputStars.value = '';
+            inputComment.value = '';
             newComment(userId,stars,comment);
         }
         updateComments();
     }catch(err){
-        console.error('error creating comment: ', err)
+        console.error('error creating comment: ', err);
     }
 });
 
@@ -175,6 +201,10 @@ buttonRegister.addEventListener('click', async ()=>{
                   });
             }
 
+            inputDisplayName.value = '';
+            inputEmail.value = '';
+            inputPassword.value = '';
+
             console.log('registered user:', userCredential.user);
         }
     }catch(err){
@@ -187,9 +217,9 @@ buttonLogin.addEventListener('click', async () => {
     try {
         const email = inputEmail.value;
         const password = inputPassword.value;
-
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        console.log('logged user: ', userCredential.user);
+        await signInWithEmailAndPassword(auth, email, password);
+        inputEmail.value = '';
+        inputPassword.value = '';
     } catch (err) {
         console.error('error on login: ', err);
     }
@@ -199,8 +229,20 @@ buttonLogin.addEventListener('click', async () => {
 buttonLogout.addEventListener('click', async () => {
     try {
         await signOut(auth);
-        console.log('logout');
     } catch (error) {
         console.error('error on logout: ', error);
+    }
+});
+
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        console.log('User is logged in:', user);
+        updateComments();
+    } else {
+        console.log('No user is logged in.');
+        divComments.innerHTML = '';
+        const p = document.createElement('p');
+        p.innerHTML = 'log in to access comments';
+        divComments.appendChild(p);
     }
 });

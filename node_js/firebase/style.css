@@ -1,3 +1,7 @@
+*{
+    box-sizing: border-box;
+}
+
 main{
     width: 800px;
     margin: 10px auto;
@@ -16,18 +20,39 @@ section{
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.404);
 }
 
+button{
+    margin: 3px;
+    padding: 5px;
+
+    border: 1px solid lightgrey;
+    border-radius: 10px 20px 10px 20px;
+
+    font-size: 1.05em;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.295);
+
+    cursor:pointer;
+    transition: .5s ease;
+}
+
+button:hover{
+    transform: scale(1.1);
+    outline: 1px solid black;
+    border-radius: 10px 10px 10px 10px;
+}
+
 li{
     margin: 10px;
 }
 
 .form > div{
-    width: 500px;
+    width: 600px;
     margin: 10px 0px;
     text-align: right;
 }
 
 .form label{
     font-weight: bold;
+    font-size: 1.1em;
 }
 
 .form input{
