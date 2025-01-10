@@ -19,6 +19,17 @@ import{
     onAuthStateChanged 
 } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 
+
+
+fetch('test.json')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => console.error('Erro ao carregar o JSON:', error));
+
+
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
