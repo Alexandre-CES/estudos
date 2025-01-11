@@ -19,31 +19,18 @@ import{
     onAuthStateChanged 
 } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 
-
-
-fetch('test.json')
-  .then(response => response.json())
-  .then(data => {
-    console.log(data);
-  })
-  .catch(error => console.error('Erro ao carregar o JSON:', error));
-
-
-
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const jsonData = await fetch('data.json')
+  .then(response => response.json())
+  .catch(error => console.error('Error loading JSON: ', error));
+
 const firebaseConfig = {
-    apiKey: "AIzaSyDaryRbdZF52F9XjGZedkwyEHNpEp3dIGE",
-    authDomain: "teste-77185.firebaseapp.com",
-    projectId: "teste-77185",
-    storageBucket: "teste-77185.firebasestorage.app",
-    messagingSenderId: "310872162520",
-    appId: "1:310872162520:web:9ab770f77496c6fd8897ad",
-    measurementId: "G-8WWZD05PH2"
-  };
+    ...jsonData
+};
 
 // *Initialize Firebase
 const app = initializeApp(firebaseConfig);
