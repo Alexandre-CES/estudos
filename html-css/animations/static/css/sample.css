@@ -1,0 +1,17 @@
+#sample-1{
+    position: relative;
+    animation: upAndDown linear 3s infinite;
+}
+
+@keyframes upAndDown{
+    0% {
+        top: 10%;
+    }
+    50% {
+        top: 31%;
+    }
+    100% {
+        top: 10%;
+    }
+}
+

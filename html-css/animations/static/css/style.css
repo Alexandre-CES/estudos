@@ -1,0 +1,61 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    
+    overflow-x: hidden;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    
+    color: white;
+    background-color: black;
+}
+
+
+
+h1,h2{
+    margin: 10px;
+
+    font-size: 2.5em;
+}
+
+header{
+    padding: 20px;
+    text-align: center;
+}
+
+section{
+    width: 50%;
+    height: 400px;
+
+    margin: 30px auto;
+
+    background-color: #0A0A0A;
+}
+
+section > div{
+    max-width: 80%;
+
+    margin: 10px auto;
+    padding: 30px;
+
+    background-color: #1A1A1A;
+}
+
+/* scrollbar */
+::-webkit-scrollbar{
+    width: 10px;
+
+    background-color: rgb(58, 58, 58);
+}
+
+::-webkit-scrollbar-button{
+    background-color: rgb(83, 83, 83);
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: rgb(83, 83, 83);
+}
