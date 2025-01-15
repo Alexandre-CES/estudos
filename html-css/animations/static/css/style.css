@@ -28,6 +28,10 @@ header{
 }
 
 section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     width: 50%;
     height: 400px;
 
@@ -41,6 +45,8 @@ section > div{
 
     margin: 10px auto;
     padding: 30px;
+
+    border-radius: 20px;
 
     background-color: #1A1A1A;
 }
