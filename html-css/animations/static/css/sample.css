@@ -69,3 +69,60 @@
         transform: rotate(360deg);
     }
 }
+
+#sample-3{
+
+}
+
+#sample-3 > div{
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 50%;
+    height: 50%;
+}
+
+#sample-3 button{
+    padding: 10px;
+
+    border: hidden;
+    border-radius: 50%;
+
+    font-size: 1.3em;
+
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.418);
+
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+}
+
+#sample-3 button:hover{
+    transform: scale(1.1);
+
+    border: 1px solid rgb(0, 247, 255);
+
+    box-shadow: 0 0 2px rgba(0, 247, 255, 0.7),
+                0 0 4px rgba(0, 247, 255, 0.6),
+                0 0 6px rgba(0, 247, 255, 0.5),
+                0 0 8px rgba(0, 247, 255, 0.4),
+                0 0 10px rgba(0, 247, 255, 0.3),
+                0 0 12px rgba(0, 247, 255, 0.2),
+                0 0 14px rgba(0, 247, 255, 0.1);
+
+}
+
+#sample-3 button:active{
+    transform: scale(0.9);
+
+    box-shadow: 0 0 2px rgba(0, 255, 136, 0.7),
+                0 0 4px rgba(0, 255, 136, 0.6),
+                0 0 6px rgba(0, 255, 136, 0.5),
+                0 0 8px rgba(0, 255, 136, 0.4),
+                0 0 10px rgba(0, 255, 136, 0.3),
+                0 0 12px rgba(0, 255, 136, 0.2),
+                0 0 14px rgba(0, 255, 136, 0.1);
+
+    transition: 0s;
+}
