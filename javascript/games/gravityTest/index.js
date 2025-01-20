@@ -3,36 +3,41 @@ const player = document.getElementById('player');
 const GRAVITY = 5;
 const JUMP_POWER = 50;
 const GROUND_LEVEL = 500;
+const RIGHT_WALL = 1305;
 
 let isJumping = false;
 let velocityY = 0;
 let positionY = GROUND_LEVEL;
 
+let positionX = 600;
+const keysPressed = {};
+
 function updatePlayerPosition() {
     player.style.top = `${positionY}px`;
+    player.style.left = `${positionX}px`;
 }
 
-/*  
-    await/sleep function
-
-    use example:
-        -await sleep(1);
-*/
-function sleep(seconds) {
-    return new Promise(resolve => setTimeout(resolve, seconds * 1000));
+function movePlayer() {
+    if (keysPressed['ArrowLeft']) {
+        positionX = Math.max(9, positionX - 5);
+    }
+    if (keysPressed['ArrowRight']) {
+        positionX = Math.min(RIGHT_WALL, positionX + 5);
+    }
+    updatePlayerPosition();
+    requestAnimationFrame(movePlayer);
 }
 
-async function jump(){
+function jump() {
     if (isJumping) return;
-
+    
     isJumping = true;
     velocityY = -JUMP_POWER;
 
-    const gameLoop = () => {
-        
+    const jumpLoop = () => {
         velocityY += GRAVITY;
         positionY += velocityY;
-
+        
         if (positionY >= GROUND_LEVEL) {
             positionY = GROUND_LEVEL;
             velocityY = 0;
@@ -42,36 +47,25 @@ async function jump(){
         }
 
         updatePlayerPosition();
-        requestAnimationFrame(gameLoop);
+        requestAnimationFrame(jumpLoop);
     };
 
-    gameLoop();
+    jumpLoop();
 }
 
-//listening inputs
-document.addEventListener("keydown", function (event) {
-    if (event.defaultPrevented) {
-      return; // Do nothing if the event was already processed
-    }
-  
-    switch (event.key) {
-      case "ArrowDown":
-        break;
-      case "ArrowUp":
+document.addEventListener('keydown', (event) => {
+    keysPressed[event.key] = true;
 
+    if (event.key === 'ArrowUp') {
         jump();
-
-        break;
-      case "ArrowLeft":
-        break;
-      case "ArrowRight":
-        break;
-      default:
-        return;
     }
-  
-    // Cancel the default action to avoid it being handled twice
+
     event.preventDefault();
 });
 
+document.addEventListener('keyup', (event) => {
+    keysPressed[event.key] = false;
+});
+
+movePlayer();
 updatePlayerPosition();
