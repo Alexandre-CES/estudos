@@ -1,8 +1,4 @@
 
-#image-sample-1 h2, #image-sample-1 p{
-    overflow: hidden; 
-}
-
 #image-sample-1 div{
     position: relative;
 
@@ -38,5 +34,107 @@
     }
     to {
         transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* *=> sample 2 */
+
+#image-sample-2{
+    
+}
+
+#image-sample-2 > div{
+    position: relative;
+
+    width: 90%;
+    height: 90%;
+
+    padding: 0px;
+}
+
+#image-sample-2 img{
+    position: absolute;
+
+}
+
+/* background */
+
+#dino-background{
+    width: 100%;
+    height: 100%;
+}
+
+/* clound */
+#dino-clound{
+    width: 20%;
+    
+    top: 20%;
+
+    animation: clound 10s linear infinite;
+}
+
+@keyframes clound {
+    from{
+        left:120%;
+    }
+    to{
+        left:-20%;
+    }
+}
+
+/* floor */
+#dino-floor{
+    width: 200%;
+
+    top: 65%;
+
+    animation: floor linear 3s infinite;
+}
+
+@keyframes floor {
+    from{
+        right: -100%;
+    }
+    to{
+        right: 0%;
+    }
+}
+
+/* cactus */
+#dino-cactus{
+    top: 55%;
+
+    animation: cactus 5s linear infinite;
+}
+
+@keyframes cactus {
+    from{
+        left:120%;
+    }
+    to{
+        left: -20%;
+    }
+}
+
+/* dino */
+#dino-dino{
+    top: 52%;
+
+    left: 20%;
+
+    animation: dinoJump 2s linear infinite;
+
+    animation-play-state: paused;
+}
+
+@keyframes dinoJump {
+    0%{
+        top: 52%;
+    }
+    50%{
+        top:10%;
+    }
+    100%{
+        top:52%;
     }
 }

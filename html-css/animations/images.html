@@ -14,13 +14,34 @@
     </header>
     <main>
         <section id="image-sample-1" class="sample">
-            <h2>Two images together</h2>
-            <p>One is spinning, other is not</p>
             <div>
-                <img src="./static/imgs/spinner-middle.png" alt="">
-                <img src="./static/imgs/spinner.png" alt="">
+                <img src="./static/imgs/spinner/spinner-middle.png" alt="">
+                <img src="./static/imgs/spinner/spinner.png" alt="">
+            </div>
+        </section>
+
+        <section id="image-sample-2" class="sample">
+            <div>
+                <img id="dino-background" src="./static/imgs/dino/background.png" alt="">
+                <img id="dino-clound" src="./static/imgs/dino/clound-2.png" alt="">
+                <img id="dino-floor" src="./static/imgs/dino/floor.png" alt="">
+                <img id="dino-cactus" src="./static/imgs/dino/cactus.png" alt="">
+                <img id="dino-dino" src="./static/imgs/dino/dinosaur.png" alt="">
             </div>
         </section>
     </main>
+
+    <script>
+        const dino = document.getElementById('dino-dino');
+
+        function triggerJump() {
+            dino.style.animationPlayState = 'running';
+
+            setTimeout(() => {
+                dino.style.animationPlayState = 'paused'; 
+            }, 2000);
+        }
+        setInterval(triggerJump, 3000);
+    </script>
 </body>
 </html>
