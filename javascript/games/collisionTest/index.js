@@ -29,7 +29,6 @@ function Main(){
 
         mouse.x = (event.clientX - rect.left) * scaleX - squaresSizes.w / 2;
         mouse.y = (event.clientY - rect.top) * scaleY - squaresSizes.w / 2;
-
     })
 
     //initial load
@@ -42,14 +41,6 @@ function animate(){
     
     ctx.clearRect(0,0,baseCanvas.width,baseCanvas.height)
 
-    ctx.fillStyle = "rgb(180 180 180)";
-    ctx.fillRect(
-        staticSquare.x,
-        staticSquare.y,
-        squaresSizes.w, 
-        squaresSizes.h
-    );
-
     ctx.fillStyle = "rgb(0 0 200)";
     ctx.fillRect(
         mouse.x,
@@ -58,7 +49,31 @@ function animate(){
         squaresSizes.h
     );
 
-    
+    //red if is colliding, gray if not
+    if(collision()){
+        ctx.fillStyle = "rgb(255 0 0)";
+        
+    }else{
+        ctx.fillStyle = "rgb(180 180 180)";
+    }
+
+    ctx.fillRect(
+        staticSquare.x,
+        staticSquare.y,
+        squaresSizes.w, 
+        squaresSizes.h
+    );
+
+}
+
+//check if squares are colliding
+function collision(){
+    return (
+        mouse.x < staticSquare.x + squaresSizes.w &&
+        mouse.x + squaresSizes.w > staticSquare.x &&
+        mouse.y < staticSquare.y + squaresSizes.h &&
+        mouse.y + squaresSizes.h > staticSquare.y
+    );
 }
 
 //starts when window load
