@@ -1,71 +1,131 @@
-const player = document.getElementById('player');
+const baseCanvas = document.getElementById('baseCanvas');
+const ctx = baseCanvas.getContext('2d');
 
 const GRAVITY = 5;
-const JUMP_POWER = 50;
-const GROUND_LEVEL = 500;
-const RIGHT_WALL = 1305;
 
-let isJumping = false;
-let velocityY = 0;
-let positionY = GROUND_LEVEL;
+let player = {
+    w:25,
+    h:25,
 
-let positionX = 600;
-const keysPressed = {};
+    x:300,
+    y: baseCanvas.height,
 
-function updatePlayerPosition() {
-    player.style.top = `${positionY}px`;
-    player.style.left = `${positionX}px`;
+    jumpPower:50,
+    isJumping: false,
+
+    speedX:0,
+    maxSpeedX:20,
+    speedY:0,
+
 }
 
-function movePlayer() {
-    if (keysPressed['ArrowLeft']) {
-        positionX = Math.max(9, positionX - 5);
-    }
-    if (keysPressed['ArrowRight']) {
-        positionX = Math.min(RIGHT_WALL, positionX + 5);
-    }
-    updatePlayerPosition();
-    requestAnimationFrame(movePlayer);
+let direction = {
+   x: false,
+   y: 'down'
 }
 
-function jump() {
-    if (isJumping) return;
-    
-    isJumping = true;
-    velocityY = -JUMP_POWER;
+function start(){
 
-    const jumpLoop = () => {
-        velocityY += GRAVITY;
-        positionY += velocityY;
-        
-        if (positionY >= GROUND_LEVEL) {
-            positionY = GROUND_LEVEL;
-            velocityY = 0;
-            isJumping = false;
-            updatePlayerPosition();
-            return;
+    document.addEventListener('keydown', (event)=>{
+
+        const key = event.key;
+        if(key == 'w'){
+            direction.y = 'up';
+
+        }else if(key == 's'){
+            direction.y = 'down';
+
+        }else if(key == 'a'){
+            direction.x = 'left';
+
+        }else if(key == 'd'){
+            direction.x = 'right';
+
+        }else{
+
         }
+    });
 
-        updatePlayerPosition();
-        requestAnimationFrame(jumpLoop);
-    };
+    document.addEventListener('keyup', (event)=>{
+        const key = event.key;
+        if(key == 'w' || key == 's'){
+            direction.y = false;
 
-    jumpLoop();
+        }else if(key == 'a'){
+            if (direction.x == 'left'){
+                direction.x = false;
+            }
+        }else if(key == 'd'){
+            if (direction.x == 'right'){
+                direction.x = false;
+            }
+        }else{
+
+        }
+    })
+
 }
 
-document.addEventListener('keydown', (event) => {
-    keysPressed[event.key] = true;
+function Main(){
+    requestAnimationFrame(Main);
+    applyGravity();
+    movePlayer();
+    renderPlayer();
 
-    if (event.key === 'ArrowUp') {
+    if (direction.y == 'up'){
         jump();
     }
 
-    event.preventDefault();
-});
+}
 
-document.addEventListener('keyup', (event) => {
-    keysPressed[event.key] = false;
-});
+function applyGravity() {
+    if (player.y < baseCanvas.height - player.h) {
+        player.speedY += GRAVITY;
+    } else {
+        if (player.speedY == 0){
+            player.isJumping = false;
+            player.y = baseCanvas.height - player.h; 
+        }
+    }
 
-movePlayer();
-updatePlayerPosition();
+    player.y += player.speedY;
+
+    if (player.y >= baseCanvas.height - player.h) {
+        player.y = baseCanvas.height - player.h;
+        player.speedY = 0; 
+    }
+}
+
+function renderPlayer() {
+    ctx.clearRect(0, 0, baseCanvas.width, baseCanvas.height);
+    ctx.fillStyle = 'blue';
+    ctx.fillRect(player.x, player.y, player.w, player.h);
+}
+
+function jump() {
+    if (!player.isJumping) {
+        player.isJumping = true;
+        player.speedY = -player.jumpPower;
+    }
+}
+
+function movePlayer() {
+    if (direction.x === 'left' && player.speedX > -player.maxSpeedX) {
+        player.speedX -= 1;
+    } else if (direction.x === 'right' && player.speedX < player.maxSpeedX) {
+        player.speedX += 1;
+    } else {
+        player.speedX *= 0.9;
+    }
+
+    player.x += player.speedX;
+
+    if (player.x < 0) player.x = 0;
+    if (player.x > baseCanvas.width - player.w) player.x = baseCanvas.width - player.w;
+}
+
+
+window.addEventListener('load', ()=>{
+    start();
+    Main();
+});
