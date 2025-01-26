@@ -117,14 +117,30 @@
 }
 
 /* dino */
-#dino-dino{
-    top: 52%;
+#dino-dino-box{
+    position: relative;
+    width: 40px;
+    height: 43px;
 
+    top: 52%;
     left: 20%;
 
     animation: dinoJump 2s linear infinite;
-
     animation-play-state: paused;
+}
+
+#dino-dino{
+
+    animation: dinoWalk .5s linear infinite;
+}
+
+@keyframes dinoWalk {
+    from{
+        content:url(../../imgs/dino/dinosaur.png);
+    }
+    to{
+        content:url(../../imgs/dino/dinosaur2.png);
+    }
 }
 
 @keyframes dinoJump {

@@ -26,13 +26,15 @@
                 <img id="dino-clound" src="./static/imgs/dino/clound-2.png" alt="">
                 <img id="dino-floor" src="./static/imgs/dino/floor.png" alt="">
                 <img id="dino-cactus" src="./static/imgs/dino/cactus.png" alt="">
-                <img id="dino-dino" src="./static/imgs/dino/dinosaur.png" alt="">
+                <div id="dino-dino-box">
+                    <img id="dino-dino" alt="">
+                </div>
             </div>
         </section>
     </main>
 
     <script>
-        const dino = document.getElementById('dino-dino');
+        const dino = document.getElementById('dino-dino-box');
 
         function triggerJump() {
             dino.style.animationPlayState = 'running';
@@ -41,7 +43,9 @@
                 dino.style.animationPlayState = 'paused'; 
             }, 2000);
         }
+
         setInterval(triggerJump, 3000);
+
     </script>
 </body>
 </html>
