@@ -77,6 +77,8 @@ section.sample{
     margin: 30px auto;
 
     background-color: #0A0A0A;
+
+    
 }
 
 section.sample > div{
@@ -90,4 +92,6 @@ section.sample > div{
     box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.432);
 
     background-color: #1A1A1A;
+
+    overflow: hidden;
 }
