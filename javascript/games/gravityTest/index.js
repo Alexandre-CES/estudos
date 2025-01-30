@@ -1,20 +1,22 @@
 const baseCanvas = document.getElementById('baseCanvas');
 const ctx = baseCanvas.getContext('2d');
 
-const GRAVITY = 5;
+const GRAVITY = 2;
 
 let player = {
+    name: 'player',
+
     w:25,
     h:25,
 
     x:300,
-    y: baseCanvas.height,
+    y: baseCanvas.height - 25,
 
-    jumpPower:50,
+    jumpPower:20,
     isJumping: false,
 
     speedX:0,
-    maxSpeedX:20,
+    maxSpeedX:5,
     speedY:0,
 
 }
@@ -23,6 +25,53 @@ let direction = {
    x: false,
    y: 'down'
 }
+
+let objectsInGame = [
+    player,
+    {
+        name: 'ground',
+        x:0,
+        y:baseCanvas.height,
+
+        w:baseCanvas.width,
+        h:baseCanvas.height
+    },
+    {
+        name: 'wall1',
+        x: 0,
+        y: 0,
+
+        w: 10,
+        h: baseCanvas.height
+    },
+    {
+        name: 'wall2',
+        x: baseCanvas.width -10,
+        y: 0,
+
+        w: 10,
+        h: baseCanvas.height
+    },
+    {
+        name: 'square1',
+
+        x: 350,
+        y: baseCanvas.height - 30,
+
+        w: 30,
+        h: 30
+    },
+    {
+        name: 'square2',
+
+        x: 400,
+        y: baseCanvas.height - 100,
+
+        w: 30,
+        h: 30
+    }
+    
+]
 
 function start(){
 
@@ -70,7 +119,7 @@ function Main(){
     requestAnimationFrame(Main);
     applyGravity();
     movePlayer();
-    renderPlayer();
+    renderObjectsInGame();
 
     if (direction.y == 'up'){
         jump();
@@ -79,27 +128,32 @@ function Main(){
 }
 
 function applyGravity() {
-    if (player.y < baseCanvas.height - player.h) {
+    if (!collisionY()) {
         player.speedY += GRAVITY;
     } else {
         if (player.speedY == 0){
             player.isJumping = false;
-            player.y = baseCanvas.height - player.h; 
         }
     }
 
     player.y += player.speedY;
 
-    if (player.y >= baseCanvas.height - player.h) {
-        player.y = baseCanvas.height - player.h;
+    if (collisionY()) {
         player.speedY = 0; 
     }
 }
 
-function renderPlayer() {
+function renderObjectsInGame() {
     ctx.clearRect(0, 0, baseCanvas.width, baseCanvas.height);
-    ctx.fillStyle = 'blue';
-    ctx.fillRect(player.x, player.y, player.w, player.h);
+    for(let obj of objectsInGame){
+        if(obj.name == 'player'){
+            ctx.fillStyle = 'blue';
+        }else{
+            ctx.fillStyle = 'black';
+        }   
+        ctx.fillRect(obj.x, obj.y, obj.w, obj.h);
+    }
+    
 }
 
 function jump() {
@@ -120,10 +174,55 @@ function movePlayer() {
 
     player.x += player.speedX;
 
-    if (player.x < 0) player.x = 0;
-    if (player.x > baseCanvas.width - player.w) player.x = baseCanvas.width - player.w;
+    if (collisionX()) player.speedX = 0;
 }
 
+function collisionX(){
+    for (let obj of objectsInGame) {
+        if (obj === player) continue;
+
+        if (
+            player.x + player.w > obj.x &&
+            player.x < obj.x + obj.w &&
+            player.y + player.h > obj.y &&
+            player.y < obj.y + obj.h
+        ) {
+            if (direction.x === 'right') {
+                player.x = obj.x - player.w;
+            } else if (direction.x === 'left') {
+                player.x = obj.x + obj.w;
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+function collisionY(){
+    for (let obj of objectsInGame) {
+        if (obj === player) continue;
+
+        if (
+            player.y + player.h >= obj.y &&
+            player.y < obj.y + obj.h &&
+            player.x + player.w > obj.x &&
+            player.x < obj.x + obj.w
+        ) {
+
+            if(player.y < obj.y){
+                player.y = obj.y - player.h;
+                
+            }else{
+                player.y = obj.y + obj.h;
+                player.speedY = 0
+            }
+
+            
+            return true;
+        }
+    }
+    return false;
+}
 
 window.addEventListener('load', ()=>{
     start();
