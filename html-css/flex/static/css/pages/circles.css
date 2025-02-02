@@ -1,20 +1,17 @@
 
 main{
     display: flex;
-
     justify-content: center;
+    flex-flow: wrap;
 }
 
 section.circle-section{
     display: flex;
 
-    justify-content: space-evenly;
-    align-items: center;
-
-    flex-flow: wrap;
-
     width: 80%;
     height: 500px;
+
+    margin: 30px;
 
     border-radius: 25px;
 
@@ -22,12 +19,32 @@ section.circle-section{
 }
 
 section.circle-section > div{
+    border-radius: 50%;
+    background-color: white;
+}
+
+section#circle-1{
+    justify-content: space-evenly;
+    align-items: center;
+
+    flex-flow: wrap;
+
+    
+}
+
+section#circle-1 > div{
     flex-basis: 20%;
     height: 20%;
     
     margin: 10px;
+}
 
-    border-radius: 50%;
-    
-    background-color: white;
+section#circle-2{
+    justify-content: center;
+    flex-flow: wrap;
+}
+
+section#circle-2 > div{
+    flex-basis: 45%;
+    margin: 10px;
 }
