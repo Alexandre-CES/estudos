@@ -1,6 +1,10 @@
 
+import java.util.ArrayList;
+
 public class Main{
     public static void main(String[] args) {
+
+        System.out.println("Hello, World!");
 
         //integers
         byte byteVar = -128;
@@ -19,6 +23,7 @@ public class Main{
         //boolean
         boolean booleanVar = true;
 
+        //conditionals
         if(booleanVar){
             System.out.println("if");
         }else if(StringVar == "string"){
@@ -27,5 +32,18 @@ public class Main{
             System.out.println("else");
         }
 
+        //vector
+        int[] fixedIntColection = {1,2,3,4,5};
+        fixedIntColection[0] = 3;
+        int[] numbers = new int[3];
+
+        System.out.println(fixedIntColection[0]);
+        System.out.println(fixedIntColection.length);
+
+        ArrayList<String> names = new ArrayList<>();
+        names.add("Alexandre");
+        names.add("Robson");
+
+        System.out.println(names);
     }
 }
