@@ -1,49 +1,20 @@
 
 import java.util.ArrayList;
+import basics.Basics;
 
 public class Main{
     public static void main(String[] args) {
 
-        System.out.println("Hello, World!");
+        String arg = "";
 
-        //integers
-        byte byteVar = -128;
-        short shortVar = 32767;
-        int intVar = 2147483647;
-        long longVar = 999999999999999999L;
-        
-        //decimals
-        float floatVar = 1.1f;
-        double doubleVar = 1.9999999999999999;
-
-        //string && char
-        String StringVar = "string";
-        char charVar = 's';
-
-        //boolean
-        boolean booleanVar = true;
-
-        //conditionals
-        if(booleanVar){
-            System.out.println("if");
-        }else if(StringVar == "string"){
-            System.out.println("else if");
-        }else{
-            System.out.println("else");
+        if (args.length > 0){
+            arg = args[0];
         }
 
-        //vector
-        int[] fixedIntColection = {1,2,3,4,5};
-        fixedIntColection[0] = 3;
-        int[] numbers = new int[3];
+        if (arg.equals("basics")){
+            Basics basics = new Basics();
+        }  
+        
 
-        System.out.println(fixedIntColection[0]);
-        System.out.println(fixedIntColection.length);
-
-        ArrayList<String> names = new ArrayList<>();
-        names.add("Alexandre");
-        names.add("Robson");
-
-        System.out.println(names);
     }
 }
