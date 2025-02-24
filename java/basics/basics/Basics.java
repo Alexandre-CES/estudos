@@ -5,8 +5,7 @@ import java.util.ArrayList;
 public class Basics {
     
     public Basics(){
-        System.out.println("Hello, World!");
-
+    
         //integers
         byte byteVar = -128;
         short shortVar = 32767;
