@@ -8,6 +8,7 @@ import com.first.first_spring_app.domain.User;
 import com.first.first_spring_app.service.HelloWorldService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,5 +30,12 @@ public class HelloWorldController {
     @PostMapping("/{id}")
     public String helloWorldPost(@PathVariable("id") String id, @RequestParam(value = "filter", defaultValue = "none") String filter, @RequestBody User body){
         return "Hello, World " + body.getName() + " : " + id + " : " + filter;
+    }
+
+    @PostMapping("/error")
+    public ResponseEntity<Object> errorTesting(){
+
+        throw new RuntimeException("Forçando erro");
+        
     }
 }
