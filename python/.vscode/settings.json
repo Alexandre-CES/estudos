@@ -1,3 +1,4 @@
 {
-    "python.analysis.gotoDefinitionInStringLiteral": false
+    "python.analysis.gotoDefinitionInStringLiteral": false,
+    "python-envs.pythonProjects": []
 }
