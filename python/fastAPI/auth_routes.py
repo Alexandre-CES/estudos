@@ -1,7 +1,9 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from models import User
 from dependencies import get_session
-
+from main import bcrypt_context
+from schemas import UserSchema
+from sqlalchemy.orm import Session
 
 auth_router = APIRouter(prefix='/auth', tags=['auth'])
 
@@ -10,13 +12,14 @@ async def autenticar():
     return {'message': 'Authenticated', 'authenticated': False}
 
 @auth_router.post('/create_account')
-async def create_account(email:str, password:str, name:str, session = Depends(get_session)):
+async def create_account(user_schema: UserSchema, session: Session = Depends(get_session)):
     
-    user = session.query(User).filter(User.email==email).first()
+    user = session.query(User).filter(User.email==user_schema.email).first()
     if user:
-        return {'message':'User already exist'}
+        raise HTTPException(status_code=400, detail='Email already exist')
     else:
-        new_user = User(name,email,password)
+        hash_password = bcrypt_context.hash(user_schema.password)
+        new_user = User(user_schema.name,user_schema.email,hash_password, user_schema.active, user_schema.admin)
         session.add(new_user)
         session.commit()
-        return {'message':'User created successfully'}
+        return {'message':f'User created successfully: {user_schema.email}'}
