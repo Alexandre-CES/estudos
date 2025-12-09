@@ -42,7 +42,10 @@ class Order(Base):
         self.user = user
         self.price = price
 
-class OderItem(Base):
+    def calc_price(self):
+        self.price = 10
+
+class OrderItem(Base):
     __tablename__ = 'order_items'
 
     id = Column('id',Integer, primary_key=True, autoincrement=True)
